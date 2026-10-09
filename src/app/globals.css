@@ -15,10 +15,10 @@
   --c-gold: 170 137 85; /* #AA8955 or terni */
   --c-gold-hi: 201 168 112;
   --c-ember: 142 56 47; /* #8E382F rouge braise */
-  --c-ember-hi: 196 92 62;
-  --c-ash: 119 119 128; /* #777780 gris cendre */
+  --c-ember-hi: 200 96 66; /* contraste ≥ 4,6:1 sur les panneaux */
+  --c-ash: 126 126 135; /* gris cendre (#777780 éclairci : contraste ≥ 4,6:1) */
   --c-frost: 128 150 168;
-  --c-moss: 104 120 84;
+  --c-moss: 116 132 96; /* contraste ≥ 4,6:1 */
   --c-text: 214 203 183;
   --c-text-dim: 158 152 140;
   --c-line: 170 137 85;
@@ -34,7 +34,7 @@
   --c-stone: 196 184 160;
   --c-ivory: 38 32 26;
   --c-parch: 28 24 20;
-  --c-gold: 128 96 48;
+  --c-gold: 120 88 40; /* thème clair : contraste ≥ 4,7:1 */
   --c-gold-hi: 104 76 34;
   --c-ember: 140 50 38;
   --c-ember-hi: 150 58 40;

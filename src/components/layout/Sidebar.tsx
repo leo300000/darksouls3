@@ -56,7 +56,7 @@ export function Sidebar() {
   return (
     <aside className="fixed inset-y-0 left-0 z-40 hidden w-[272px] flex-col border-r border-line/15 bg-night/95 backdrop-blur lg:flex">
       <Link href="/" className="group block px-6 pb-5 pt-7" aria-label="The Ashen Archive — accueil">
-        <span className="block font-engrave text-[0.6rem] text-gold/80">Archives interdites de Lothric</span>
+        <span className="block font-engrave text-[0.6rem] text-gold">Archives interdites de Lothric</span>
         <span className="mt-1 block font-display text-[1.75rem] font-semibold leading-none text-parch transition-colors group-hover:text-gold-hi">
           The Ashen Archive
         </span>

@@ -52,7 +52,7 @@ export function BossPortrait({
   return (
     <div className={`relative ${ratio} overflow-hidden ${className}`}>
       <Engraving spec={art} seed={slug} variant="sigil" emblem={bossEmblems[slug]} caption={false} title={name} className={`h-full w-full ${imgClassName}`} />
-      <span className="absolute bottom-2 left-2 border border-line/30 bg-void/75 px-1.5 py-0.5 text-[0.6rem] tracking-wide text-ash">
+      <span className="absolute bottom-2 left-2 z-10 border border-line/30 bg-void/85 px-1.5 py-0.5 text-[0.6rem] tracking-wide text-dim">
         {size === "full" ? "Emblème provisoire — illustration à produire" : "Emblème provisoire"}
       </span>
     </div>

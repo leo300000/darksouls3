@@ -1,10 +1,13 @@
-// Tests de bout en bout (Playwright). Usage : serveur lancé sur :3000, puis
+// Tests de bout en bout (Playwright). Usage : serveur lancé (par défaut sur :3000), puis
 // PW_PATH=$(npm root -g)/playwright node tests/e2e.mjs <dossier-de-sortie>
+// Export GitHub Pages : python3 tests/serve-pages.py out 3200 /darksouls3 & puis E2E_BASE=http://localhost:3200/darksouls3
+// Code de sortie 1 si une vérification échoue.
 import { createRequire } from "module";
 import fs from "fs";
 const require = createRequire(import.meta.url);
-const { chromium } = require(process.env.PW_PATH);
+const { chromium } = require(process.env.PW_PATH ?? "playwright");
 const OUT = process.argv[2];
+fs.mkdirSync(OUT, { recursive: true });
 const B = process.env.E2E_BASE ?? "http://localhost:3000";
 const browser = await chromium.launch();
 const results = [];
@@ -122,3 +125,6 @@ ok("menu mobile : navigation", /\/boss\/?$/.test(mp.url()));
 console.log(results.join("\n"));
 console.log("\nErreurs console :", errors.length ? "\n" + errors.join("\n") : "aucune");
 await browser.close();
+const failed = results.filter((r) => r.startsWith("✗")).length;
+console.log(`\n${results.length - failed}/${results.length} vérifications réussies`);
+if (failed) process.exit(1);

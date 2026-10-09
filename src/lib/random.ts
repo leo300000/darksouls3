@@ -14,7 +14,8 @@ export function seeded(seed: string) {
   };
   return {
     next,
-    range: (min: number, max: number) => min + (max - min) * next(),
+    // Arrondi au centième : invisible à l'écran, mais évite d'écrire 16 décimales dans chaque SVG (poids des pages).
+    range: (min: number, max: number) => Math.round((min + (max - min) * next()) * 100) / 100,
     int: (min: number, max: number) => Math.floor(min + (max - min + 1) * next()),
     pick: <T,>(arr: readonly T[]) => arr[Math.floor(next() * arr.length)],
   };

@@ -12,6 +12,9 @@ export type EmblemKey =
 
 type Ink = { line: string; glow: string };
 
+/** Arrondi au dixième pour des coordonnées SVG compactes. */
+const q = (v: number) => Math.round(v * 10) / 10;
+
 const S = { fill: "none", strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
 
 function Sword({ ink, len = 150, glow = false }: { ink: Ink; len?: number; glow?: boolean }) {
@@ -77,7 +80,7 @@ export function Emblem({ kind, ink }: { kind: EmblemKey; ink: Ink }) {
           <circle cx="0" cy="-36" r="26" fill={line} fillOpacity="0.16" stroke={line} strokeWidth="2.4" />
           {Array.from({ length: 8 }, (_, i) => {
             const a = (Math.PI * 2 * i) / 8;
-            return <line key={i} x1={Math.cos(a) * 26} y1={-36 + Math.sin(a) * 26} x2={Math.cos(a) * 42} y2={-36 + Math.sin(a) * 42} stroke={line} strokeWidth="3" {...S} />;
+            return <line key={i} x1={q(Math.cos(a) * 26)} y1={q(-36 + Math.sin(a) * 26)} x2={q(Math.cos(a) * 42)} y2={q(-36 + Math.sin(a) * 42)} stroke={line} strokeWidth="3" {...S} />;
           })}
           {[[-48, 30], [46, 12], [38, 56]].map(([x, y]) => <path key={`${x}`} d={`M${x} ${y - 9} L${x + 5} ${y} L${x} ${y + 9} L${x - 5} ${y} Z`} fill={glow} fillOpacity="0.7" />)}
         </g>
@@ -288,7 +291,7 @@ export function Emblem({ kind, ink }: { kind: EmblemKey; ink: Ink }) {
           <circle cx="0" cy="0" r="40" fill="#000" fillOpacity="0.7" />
           {Array.from({ length: 12 }, (_, i) => {
             const a = (Math.PI * 2 * i) / 12;
-            return <line key={i} x1={Math.cos(a) * 62} y1={Math.sin(a) * 62} x2={Math.cos(a) * (76 + (i % 3) * 6)} y2={Math.sin(a) * (76 + (i % 3) * 6)} stroke={glow} strokeOpacity="0.7" strokeWidth="2" />;
+            return <line key={i} x1={q(Math.cos(a) * 62)} y1={q(Math.sin(a) * 62)} x2={q(Math.cos(a) * (76 + (i % 3) * 6))} y2={q(Math.sin(a) * (76 + (i % 3) * 6))} stroke={glow} strokeOpacity="0.7" strokeWidth="2" />;
           })}
         </g>
       );

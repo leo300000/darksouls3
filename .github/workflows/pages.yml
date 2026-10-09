@@ -31,12 +31,22 @@ jobs:
       - name: Images de boss (assets/boss-src → public/images/boss)
         run: npm run images:boss
       - run: npm run data:validate
+      - run: npm run lint
       - name: Export statique
         run: npm run build
         env:
           STATIC_EXPORT: "1"
           NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
           NEXT_PUBLIC_SITE_URL: ${{ steps.pages.outputs.base_url }}
+      - name: Navigateur de test (Playwright Chromium)
+        run: |
+          npm install --global playwright@1.56.1
+          npx --yes playwright@1.56.1 install --with-deps chromium
+      - name: Tests de bout en bout sur l'export (servi comme GitHub Pages)
+        run: |
+          python3 tests/serve-pages.py out 3200 "${{ steps.pages.outputs.base_path }}" &
+          sleep 2
+          E2E_BASE="http://localhost:3200${{ steps.pages.outputs.base_path }}" PW_PATH="$(npm root -g)/playwright" node tests/e2e.mjs "$RUNNER_TEMP/e2e"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out

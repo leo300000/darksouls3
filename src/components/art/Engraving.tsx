@@ -1,3 +1,5 @@
+"use client";
+
 import type { ArtSpec } from "@/data/types";
 import { seeded, type Rng } from "@/lib/random";
 import { Emblem, type EmblemKey } from "./emblems";
@@ -20,6 +22,9 @@ const PALETTES: Record<ArtSpec["palette"], { sky: [string, string]; far: string;
   blood: { sky: ["#3a1515", "#0d0606"], far: "#3a1a1a", mid: "#1d0d0d", near: "#0b0505", glow: "#d0604c", line: "#e7bfb2" },
   storm: { sky: ["#2a323f", "#0b0d11"], far: "#303a48", mid: "#171c24", near: "#090b0e", glow: "#d6e0ea", line: "#e4e9ee" },
 };
+
+/** Arrondi au dixième pour des coordonnées SVG compactes. */
+const q = (v: number) => Math.round(v * 10) / 10;
 
 const W = 800;
 const H = 500;
@@ -213,7 +218,7 @@ export function Engraving({
   const m = motifPath(spec, r);
   const sunX = r.range(W * 0.15, W * 0.85);
   const sunY = r.range(70, 150);
-  const embers = Array.from({ length: 26 }, () => ({ x: r.range(0, W), y: r.range(120, H), s: r.range(0.6, 2.2), o: r.range(0.25, 0.9) }));
+  const embers = Array.from({ length: 16 }, () => ({ x: r.range(0, W), y: r.range(120, H), s: r.range(0.8, 2.4), o: r.range(0.3, 0.9) }));
 
   return (
     <svg
@@ -292,7 +297,7 @@ function Sigil({ id, r, color, glow, emblem }: { id: string; r: Rng; color: stri
       {Array.from({ length: rays }, (_, i) => {
         const a = (Math.PI * 2 * i) / rays;
         const len = r.range(150, 230);
-        return <line key={i} x1={cx + Math.cos(a) * 118} y1={cy + Math.sin(a) * 118} x2={cx + Math.cos(a) * len} y2={cy + Math.sin(a) * len} stroke={color} strokeOpacity="0.35" strokeWidth={r.range(0.6, 1.6)} />;
+        return <line key={i} x1={q(cx + Math.cos(a) * 118)} y1={q(cy + Math.sin(a) * 118)} x2={q(cx + Math.cos(a) * len)} y2={q(cy + Math.sin(a) * len)} stroke={color} strokeOpacity="0.35" strokeWidth={r.range(0.6, 1.6)} />;
       })}
       <circle cx={cx} cy={cy} r={140} fill="none" stroke={color} strokeOpacity="0.5" strokeWidth="1.2" />
       <circle cx={cx} cy={cy} r={124} fill="none" stroke={color} strokeOpacity="0.25" strokeWidth="0.8" strokeDasharray="2 6" />
