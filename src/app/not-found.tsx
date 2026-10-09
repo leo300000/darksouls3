@@ -1,6 +1,9 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Engraving } from "@/components/art/Engraving";
 import { SearchTrigger } from "@/components/search/SearchTrigger";
+
+export const metadata: Metadata = { title: "Page introuvable", robots: { index: false } };
 
 export default function NotFound() {
   return (

@@ -35,7 +35,7 @@ export default function NpcIndex() {
             <SectionTitle overline={`${g.list.length} personnages`} title={g.title}>{g.text}</SectionTitle>
             <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {g.list.map((n) => (
-                <li key={n.slug} className="panel card-link relative flex gap-4 p-4">
+                <li key={n.slug} className="panel card-link relative flex min-w-0 gap-4 p-4">
                   <div className="h-28 w-20 shrink-0 overflow-hidden border border-line/20">
                     <Engraving spec={n.art} seed={n.slug} variant="sigil" className="h-full w-full" caption={false} title={n.name} />
                   </div>

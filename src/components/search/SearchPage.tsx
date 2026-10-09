@@ -40,7 +40,7 @@ export function SearchPage() {
             <h2 className="eyebrow mb-3">{g.category} · {g.hits.length}</h2>
             <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
               {g.hits.map((h) => (
-                <li key={h.h + h.t}>
+                <li key={h.h + h.t} className="min-w-0">
                   <Link href={h.h} className="panel card-link block p-3" onClick={() => recordSearch(q)}>
                     <span className="block text-parch">{h.t}</span>
                     {h.s && <span className="block truncate text-xs text-dim">{h.s}</span>}

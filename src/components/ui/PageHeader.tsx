@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import type { ArtSpec } from "@/data/types";
 import { Engraving } from "@/components/art/Engraving";
+import { fold } from "@/lib/text";
 import { Embers } from "@/components/art/Embers";
 
 export interface Crumb {
@@ -81,7 +82,7 @@ export function PageHeader({
         <div className="anim-page mt-8 max-w-3xl">
           {overline && <p className="eyebrow mb-3">{overline}</p>}
           <h1 className="title-monument text-[clamp(2.4rem,1.6rem+3.6vw,4.6rem)]">{title}</h1>
-          {subtitle && <p className="mt-2 font-display text-xl italic text-gold/90">{subtitle}</p>}
+          {subtitle && fold(subtitle) !== fold(title) && <p className="mt-2 font-display text-xl italic text-gold/90">{subtitle}</p>}
           {lede && <div className="mt-5 max-w-2xl text-[1.05rem] leading-relaxed text-text/90">{lede}</div>}
           {meta && <div className="mt-5 flex flex-wrap items-center gap-2">{meta}</div>}
           {actions && <div className="mt-6 flex flex-wrap gap-3">{actions}</div>}

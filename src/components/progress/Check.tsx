@@ -38,7 +38,7 @@ export function ChecklistProgress({ ids, label, actions = true }: { ids: string[
     <div className="panel p-4">
       <div className="flex items-baseline justify-between gap-3">
         <span className="eyebrow">{label}</span>
-        <span className="font-mono text-sm text-parch">
+        <span className="shrink-0 whitespace-nowrap font-mono text-sm text-parch">
           {hydrated ? done : "…"} / {ids.length}
         </span>
       </div>

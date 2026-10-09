@@ -26,7 +26,7 @@ export function SearchTrigger({ variant = "bar" }: { variant?: "bar" | "sidebar"
       aria-label="Ouvrir la recherche globale (raccourci Ctrl+K ou /)"
     >
       <Search size={16} strokeWidth={1.5} className="text-gold" />
-      <span className="flex-1 truncate">Rechercher dans les archives…</span>
+      <span className="flex-1 truncate">{variant === "sidebar" ? "Rechercher…" : "Rechercher dans les archives…"}</span>
       <kbd className="hidden rounded-sm border border-line/30 px-1.5 py-0.5 font-mono text-[0.65rem] text-ash sm:inline">Ctrl K</kbd>
     </button>
   );

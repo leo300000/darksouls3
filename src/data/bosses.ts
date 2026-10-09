@@ -109,10 +109,10 @@ export const bosses: Boss[] = [
       ranged: "Faisable, mais les charges couvrent l'arène : gardez de l'endurance.",
       magic: "Pyromancies efficaces si sa faiblesse au feu se confirme.",
     },
-    particulars: ["Le Maître d'armes et Lion Knight Albert peuvent être invoqués devant la porte."],
+    particulars: [],
     summons: [
       { name: "Lion Knight Albert", condition: "Signe dans l'angle de la terrasse, avant l'escalier." },
-      { name: "Sword Master Saber", condition: "Si vous l'avez tué au cimetière." },
+      { name: "Sword Master Saber", condition: "Juste avant la grande porte, si vous l'avez tué au Cimetière des Cendres." },
     ],
     lore: {
       identity: "Membre des Chevaliers d'Outrider d'Irithyll.",
@@ -208,8 +208,8 @@ export const bosses: Boss[] = [
       ranged: "Les flèches touchent le sage même de loin.",
       magic: "Utilisez des sorts rapides ; la magie est probablement moins efficace.",
     },
-    particulars: ["Eygon de Carim peut être invoqué si Irina est au sanctuaire et n'a pas été maltraitée."],
-    summons: [{ name: "Eygon of Carim", condition: "Irina recrutée et en bonne santé." }],
+    particulars: [],
+    summons: [{ name: "Eygon of Carim", condition: "Irina recrutée au sanctuaire et jamais maltraitée. Signe près d'un pilier de la salle précédant le boss." }],
     lore: {
       identity: "Maître de sorcellerie de la Légion de Farron.",
       history: "La Grande Archive abrite un autre Sage cristallin, laissant entendre que plusieurs « sages » ont suivi la même voie.",
@@ -257,11 +257,11 @@ export const bosses: Boss[] = [
       ranged: "Ciblez le diacre lumineux.",
       magic: "Pyromancies de zone efficaces.",
     },
-    particulars: ["Anri, Horace et Sirris peuvent être invoqués."],
+    particulars: [],
     summons: [
-      { name: "Anri of Astora", condition: "Derrière l'autel, si vous êtes embrasé." },
-      { name: "Horace the Hushed", condition: "Derrière l'autel." },
-      { name: "Sirris of the Sunless Realms", condition: "Devant le brouillard." },
+      { name: "Anri of Astora", condition: "Derrière le grand autel, si vous êtes embrasé." },
+      { name: "Horace the Hushed", condition: "Derrière le grand autel, si vous êtes embrasé." },
+      { name: "Sirris of the Sunless Realms", condition: "Devant le brouillard, si vous êtes embrasé." },
     ],
     lore: {
       identity: "Les prêtres de la Cathédrale, fidèles d'Aldrich.",
@@ -311,7 +311,7 @@ export const bosses: Boss[] = [
       ranged: "Difficile en phase 1 à cause du nombre.",
       magic: "Les sorts lents se placent après les saltos.",
     },
-    particulars: ["Black Hand Gotthard, Sirris, Heysel (conditions) et le Pale Shade de Londor peuvent être invoqués."],
+    particulars: [],
     summons: [
       { name: "Black Hand Gotthard", condition: "Signe en haut de la première volée de marches." },
       { name: "Sirris of the Sunless Realms", condition: "À gauche de l'entrée du mausolée." },
@@ -413,7 +413,7 @@ export const bosses: Boss[] = [
       ranged: "Les météores rendent la distance dangereuse.",
       magic: "Évitez les pyromancies (résistance présumée).",
     },
-    particulars: ["Knight Slayer Tsorig et Great Swamp Cuculus peuvent être invoqués."],
+    particulars: [],
     summons: [
       { name: "Knight Slayer Tsorig", condition: "Près du feu des Ruines démoniaques, s'il a été vaincu dans les Catacombes." },
       { name: "Great Swamp Cuculus", condition: "Devant le brouillard." },
@@ -465,7 +465,7 @@ export const bosses: Boss[] = [
       ranged: "Très difficile : il comble la distance instantanément.",
       magic: "Sorts rapides uniquement.",
     },
-    particulars: ["Gotthard, le Pale Shade de Londor ou Anri peuvent être invoqués."],
+    particulars: [],
     summons: [
       { name: "Black Hand Gotthard", condition: "Signe avant la salle." },
       { name: "Londor Pale Shade", condition: "Quête de Yoel/Yuria." },
@@ -519,8 +519,8 @@ export const bosses: Boss[] = [
       ranged: "La Storm Ruler elle-même est une attaque à distance.",
       magic: "Le feu est peu efficace (résistance présumée).",
     },
-    particulars: ["Siegward combat à vos côtés si sa quête est suivie."],
-    summons: [{ name: "Siegward of Catarina", condition: "Quête de Siegward suivie jusqu'à sa libération." }],
+    particulars: [],
+    summons: [{ name: "Siegward of Catarina", condition: "Rejoint le combat de lui-même, sans signe, si sa quête a été suivie jusqu'à sa libération." }],
     lore: {
       identity: "Géant, conquérant puis roi de la Capitale profanée.",
       history: "Les descriptions évoquent son amitié avec Siegward et la Storm Ruler, conçue pour les géants.",
@@ -569,7 +569,7 @@ export const bosses: Boss[] = [
       ranged: "Difficile, ses projectiles poursuivent.",
       magic: "Pyromancies efficaces si la faiblesse se confirme.",
     },
-    particulars: ["Anri peut être aidée en l'invoquant (quête A)."],
+    particulars: ["Quête d'Anri (voie A) : si vous avez tué Horace au Lac ardent, le signe d'Anri apparaît devant les grandes portes dorées d'Anor Londo. L'utiliser vous fait invoquer comme fantôme dans son monde pour l'aider à vaincre Aldrich."],
     summons: [],
     lore: {
       identity: "Saint de la Cathédrale devenu Dévoreur des dieux.",
@@ -672,7 +672,7 @@ export const bosses: Boss[] = [
       ranged: "Les papillons compliquent la distance.",
       magic: "Évitez la foudre (résistance présumée).",
     },
-    particulars: ["Eygon et Sirris peuvent être invoqués."],
+    particulars: [],
     summons: [
       { name: "Eygon of Carim", condition: "Sans miracle sombre acheté à Irina et après lui avoir parlé." },
       { name: "Sirris of the Sunless Realms", condition: "En bons termes." },
@@ -915,7 +915,7 @@ export const bosses: Boss[] = [
       ranged: "Faisable en phase 2 en visant Lothric.",
       magic: "Sorts rapides en phase 2.",
     },
-    particulars: ["Orbeck et Sirris peuvent être invoqués."],
+    particulars: [],
     summons: [
       { name: "Orbeck of Vinheim", condition: "Quatre parchemins donnés et tous ses sorts achetés." },
       { name: "Sirris of the Sunless Realms", condition: "En bons termes." },
@@ -971,7 +971,7 @@ export const bosses: Boss[] = [
       ranged: "Difficile.",
       magic: "Sorts rapides entre les combos.",
     },
-    particulars: ["Yuria et le Pale Shade de Londor peuvent être invoqués avec 8 Dark Sigils."],
+    particulars: [],
     summons: [
       { name: "Yuria of Londor", condition: "8 Dark Sigils." },
       { name: "Londor Pale Shade", condition: "8 Dark Sigils." },
@@ -1070,7 +1070,7 @@ export const bosses: Boss[] = [
       ranged: "Faisable en phase 2 sur Ariandel.",
       magic: "Pyromancies efficaces si la faiblesse se confirme.",
     },
-    particulars: ["Slave Knight Gael peut être invoqué."],
+    particulars: [],
     summons: [{ name: "Slave Knight Gael", condition: "Signe près de la porte." }],
     lore: {
       identity: "Sans-Braise devenue gardienne du Monde peint.",
@@ -1119,7 +1119,7 @@ export const bosses: Boss[] = [
       ranged: "Possible en phase 1.",
       magic: "Le feu est probablement inefficace.",
     },
-    particulars: ["Slave Knight Gael et Lapp peuvent être invoqués."],
+    particulars: [],
     summons: [
       { name: "Slave Knight Gael", condition: "Signe devant le brouillard." },
       { name: "Amnesiac Lapp", condition: "S'il s'est déplacé aux Ruines du Pic terreux." },
@@ -1212,7 +1212,7 @@ export const bosses: Boss[] = [
       ranged: "Difficile, combat long.",
       magic: "La magie ténébreuse est inefficace (résistance présumée).",
     },
-    particulars: ["Combat très long. Shira peut être invoquée."],
+    particulars: ["Combat très long, en plusieurs phases."],
     summons: [{ name: "Shira, Knight of Filianore", condition: "Si vous avez accepté sa requête." }],
     lore: {
       identity: "Dragon immortel élevé par les dieux.",

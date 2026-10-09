@@ -202,7 +202,7 @@ export default async function BossDetail({ params }: { params: Promise<{ slug: s
                 </div>
               ))}
             </div>
-            <h3 className="mt-10 font-display text-2xl text-parch">Invocations</h3>
+            <h3 className="mt-10 font-display text-2xl text-parch">Invocations et alliés</h3>
             {b.summons.length === 0 ? (
               <p className="mt-3 text-dim">Aucune invocation de PNJ documentée par les sources utilisées.</p>
             ) : (
@@ -250,9 +250,16 @@ export default async function BossDetail({ params }: { params: Promise<{ slug: s
                   <h3>Identité</h3>
                   <p>{b.lore.identity}</p>
                   {b.lore.history && (<><h3>Histoire</h3><p>{b.lore.history}</p></>)}
-                  {b.lore.symbolism && (<><h3>Symbolisme</h3><p>{b.lore.symbolism}</p></>)}
-                  {b.lore.interpretation && (<><h3>Interprétation</h3><p>{b.lore.interpretation}</p></>)}
                 </div>
+                {(b.lore.symbolism || b.lore.interpretation) && (
+                  <div className="border-l-2 border-line/25 pl-4">
+                    <div className="flex flex-wrap items-center gap-2"><ConfidenceBadge level="deduction" /> <span className="text-sm text-dim">Lecture éditoriale : ce qui suit interprète les indices, le jeu ne l&apos;énonce pas.</span></div>
+                    <div className="prose-archive mt-2">
+                      {b.lore.symbolism && (<><h3>Symbolisme</h3><p>{b.lore.symbolism}</p></>)}
+                      {b.lore.interpretation && (<><h3>Interprétation</h3><p>{b.lore.interpretation}</p></>)}
+                    </div>
+                  </div>
+                )}
                 {b.lore.relations.length > 0 && (
                   <div>
                     <p className="eyebrow mb-2">Relations</p>
