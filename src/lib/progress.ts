@@ -14,7 +14,7 @@ let manifestPromise: Promise<ManifestCategory[]> | null = null;
 
 export function loadManifest(): Promise<ManifestCategory[]> {
   if (!manifestPromise) {
-    manifestPromise = fetch("/completion-manifest.json")
+    manifestPromise = fetch(`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/completion-manifest.json`)
       .then((r) => {
         if (!r.ok) throw new Error(String(r.status));
         return r.json();

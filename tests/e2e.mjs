@@ -5,7 +5,7 @@ import fs from "fs";
 const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PW_PATH);
 const OUT = process.argv[2];
-const B = "http://localhost:3000";
+const B = process.env.E2E_BASE ?? "http://localhost:3000";
 const browser = await chromium.launch();
 const results = [];
 const errors = [];
@@ -49,11 +49,11 @@ ok("progression de zone mise à jour", /1 \/ \d+/.test(prog), prog.replace(/\n/g
 // 3. Filtres boss
 await page.goto(B + "/boss", { waitUntil: "networkidle" });
 await page.selectOption('select[aria-label="Contenu"]', "ringed-city");
-const n = await page.locator("ul > li a[href^='/boss/']").count();
+const n = await page.locator("ul > li a[href*='/boss/']:not([href$='/boss/'])").count();
 ok("filtre DLC The Ringed City = 4 boss", n === 4, `(${n})`);
 await page.selectOption('select[aria-label="Contenu"]', "tous");
 await page.selectOption('select[aria-label="Caractère obligatoire"]', "facultatifs");
-ok("filtre boss facultatifs", (await page.locator("ul > li a[href^='/boss/']").count()) > 0);
+ok("filtre boss facultatifs", (await page.locator("ul > li a[href*='/boss/']:not([href$='/boss/'])").count()) > 0);
 
 // 4. Catalogue armes avec paramètre d'URL
 await page.goto(B + "/armes?methode=Transposition", { waitUntil: "networkidle" });
@@ -116,8 +116,8 @@ results.push(`✓ débordement mobile vérifié sur ${paths.length} pages (erreu
 await mp.goto(B + "/", { waitUntil: "networkidle" });
 await mp.getByRole("button", { name: "Ouvrir le menu" }).click();
 await mp.getByRole("dialog", { name: "Menu" }).getByRole("link", { name: "Boss" }).click();
-await mp.waitForURL(/\/boss$/);
-ok("menu mobile : navigation", mp.url().endsWith("/boss"));
+await mp.waitForURL(/\/boss\/?$/);
+ok("menu mobile : navigation", /\/boss\/?$/.test(mp.url()));
 
 console.log(results.join("\n"));
 console.log("\nErreurs console :", errors.length ? "\n" + errors.join("\n") : "aucune");

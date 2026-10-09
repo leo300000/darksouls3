@@ -62,7 +62,7 @@ export function groupHits(hits: SearchHit[]): { category: string; hits: SearchHi
 let cached: Promise<SearchDoc[]> | null = null;
 export function loadIndex(): Promise<SearchDoc[]> {
   if (!cached) {
-    cached = fetch("/search-index.json")
+    cached = fetch(`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/search-index.json`)
       .then((r) => {
         if (!r.ok) throw new Error(String(r.status));
         return r.json() as Promise<SearchDoc[]>;

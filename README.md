@@ -32,6 +32,22 @@ Autres commandes :
 
 Variable optionnelle : `NEXT_PUBLIC_SITE_URL` (URL publique, utilisée pour le sitemap et les métadonnées Open Graph).
 
+## Mise en ligne sur GitHub Pages
+
+Le workflow `.github/workflows/pages.yml` construit une version 100 % statique du site et la publie à chaque push
+sur `main` (ou sur la branche de travail), ou à la demande depuis l'onglet **Actions** (« Run workflow »).
+
+Activation, une seule fois : dépôt GitHub → **Settings → Pages → Build and deployment → Source : GitHub Actions**.
+Le site est ensuite servi à l'adresse `https://<utilisateur>.github.io/<dépôt>/`.
+
+Pour reproduire l'export en local :
+
+```bash
+STATIC_EXPORT=1 NEXT_PUBLIC_BASE_PATH=/darksouls3 npm run build   # résultat dans out/
+```
+
+La progression reste stockée dans le navigateur du visiteur (`localStorage`) : aucun serveur n'est nécessaire.
+
 ## Fonctionnalités
 
 - **Accueil** immersif : illustration originale, recherche, reprise de la progression, accès aux dix grandes salles de l'archive.
