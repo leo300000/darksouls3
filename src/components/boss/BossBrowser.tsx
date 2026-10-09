@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { Engraving } from "@/components/art/Engraving";
-import { bossEmblems } from "@/data/emblems";
+import { BossPortrait } from "@/components/art/BossPortrait";
 import type { ArtSpec, Dlc } from "@/data/types";
 import { activeProfile, setChecked, useHydrated, useStore } from "@/lib/store";
 import { fold } from "@/lib/text";
@@ -110,8 +109,8 @@ export function BossBrowser({ bosses }: { bosses: BossCard[] }) {
           return (
             <li key={b.slug} className="panel card-link group relative overflow-hidden">
               <Link href={`/boss/${b.slug}`} className="block">
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <Engraving spec={b.art} seed={b.slug} variant="sigil" emblem={bossEmblems[b.slug]} className={`h-full w-full transition duration-700 group-hover:scale-105 ${beaten ? "opacity-40 grayscale" : ""}`} caption={false} title={b.name} />
+                <div className="relative overflow-hidden">
+                  <BossPortrait slug={b.slug} name={b.name} art={b.art} size="card" imgClassName={`transition duration-700 group-hover:scale-105 ${beaten ? "opacity-40 grayscale" : ""}`} />
                   <div className="absolute inset-0 bg-gradient-to-t from-night via-transparent to-transparent" />
                   <span className="absolute left-3 top-3 font-mono text-xs text-gold">#{String(b.order).padStart(2, "0")}</span>
                   {beaten && <span className="absolute right-3 top-3 border border-ember-hi px-2 py-0.5 font-engrave text-[0.6rem] text-ember-hi">Vaincu</span>}

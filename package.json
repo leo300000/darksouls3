@@ -7,6 +7,7 @@
     "build": "next build",
     "data:build": "tsx scripts/build-catalog.ts",
     "data:validate": "tsx scripts/validate-data.ts",
+    "images:boss": "node scripts/boss-images.mjs",
     "start": "next start",
     "lint": "eslint"
   },

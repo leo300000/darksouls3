@@ -12,7 +12,9 @@ import { loreArticles, loreEdges, loreNodes, timeline } from "../src/data/lore";
 import { covenants } from "../src/data/covenants";
 import type { Catalog } from "../src/data/catalog-types";
 import { slugify } from "../src/lib/text";
-import { existsSync } from "node:fs";
+import { existsSync, readdirSync, statSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { bossImages } from "../src/data/boss-images";
 import { illustrations } from "../src/data/illustrations";
 import { bossEmblems, endingEmblems } from "../src/data/emblems";
 
@@ -83,6 +85,38 @@ for (const [key, img] of Object.entries(illustrations)) {
 for (const s of Object.keys(bossEmblems)) if (!B.has(s)) errors.push(`Emblème : boss inconnu ${s}`);
 for (const b of bosses) if (!bossEmblems[b.slug]) warn.push(`Boss ${b.slug} : aucun emblème`);
 for (const s of Object.keys(endingEmblems)) if (!E.has(s)) errors.push(`Emblème : fin inconnue ${s}`);
+// Images des boss : une entrée par boss, fichiers présents selon le statut, crédits, doublons.
+{
+  const pub = (p: string) => join(__dirname, "../public", p);
+  const hashes = new Map<string, string>();
+  const referenced = new Set<string>();
+  for (const b of bosses) if (!bossImages[b.slug]) errors.push(`Image boss ${b.slug} : aucune entrée dans boss-images.ts`);
+  for (const [slug, img] of Object.entries(bossImages)) {
+    if (!B.has(slug)) errors.push(`Image boss : identifiant inconnu ${slug}`);
+    const paths = [img.file, img.thumb, img.card];
+    for (const p of paths) {
+      if (!p.startsWith(`images/boss/${slug}`)) errors.push(`Image boss ${slug} : chemin non conforme ${p}`);
+      referenced.add(p);
+    }
+    const present = paths.filter((p) => existsSync(pub(p)));
+    if (img.status !== "a-produire" && present.length !== paths.length) errors.push(`Image boss ${slug} (${img.status}) : fichier(s) manquant(s) ${paths.filter((p) => !present.includes(p)).join(", ")}`);
+    if (img.status === "a-produire" && present.length) warn.push(`Image boss ${slug} : fichiers présents mais statut « a-produire »`);
+    if (img.status === "integre" && (!img.source || !img.author || !img.license)) errors.push(`Image boss ${slug} : provenance, auteur ou licence manquant pour une image intégrée`);
+    if (!img.alt || img.alt.length < 15) errors.push(`Image boss ${slug} : texte alternatif absent ou trop court`);
+    for (const p of present) {
+      const h = createHash("sha1").update(readFileSync(pub(p))).digest("hex");
+      if (hashes.has(h)) errors.push(`Image boss : ${p} est identique à ${hashes.get(h)}`);
+      hashes.set(h, p);
+      const kb = statSync(pub(p)).size / 1024;
+      const max = p.endsWith("-thumb.webp") ? 90 : p.endsWith("-card.webp") ? 120 : 260;
+      if (kb > max) warn.push(`Image boss ${p} : ${Math.round(kb)} Ko (> ${max} Ko conseillés)`);
+    }
+  }
+  const dir = pub("images/boss");
+  if (existsSync(dir)) for (const f of readdirSync(dir)) if (f.endsWith(".webp") && !referenced.has(`images/boss/${f}`)) warn.push(`Image boss orpheline : images/boss/${f}`);
+  const st = Object.values(bossImages).reduce((acc, i) => ({ ...acc, [i.status]: (acc[i.status] ?? 0) + 1 }), {} as Record<string, number>);
+  console.log(`Images de boss — intégrées : ${st.integre ?? 0}, à vérifier : ${st["a-verifier"] ?? 0}, à produire : ${st["a-produire"] ?? 0}`);
+}
 if (catalog.unresolved.length) errors.push(`${catalog.unresolved.length} liens non résolus dans le catalogue`);
 
 for (const w of warn) console.warn(`⚠ ${w}`);

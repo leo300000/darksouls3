@@ -16,7 +16,7 @@ export const bossEmblems: Record<string, EmblemKey> = {
   "danseuse-de-la-vallee-boreale": "crescent",
   "armure-du-tueur-de-dragons": "axeShield",
   oceiros: "crownedWing",
-  "champion-gundyr": "halberd",
+  "champion-gundyr": "chainedHalberd",
   "wyverne-antique": "wing",
   "roi-sans-nom": "crownBolt",
   "lorian-et-lothric": "twinCrowns",

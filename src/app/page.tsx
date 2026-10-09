@@ -3,7 +3,8 @@ import { ArrowRight, BookOpen, Flame } from "lucide-react";
 import { HeroScene } from "@/components/art/HeroScene";
 import { Embers } from "@/components/art/Embers";
 import { Engraving } from "@/components/art/Engraving";
-import { bossEmblems, endingEmblems } from "@/data/emblems";
+import { endingEmblems } from "@/data/emblems";
+import { BossPortrait } from "@/components/art/BossPortrait";
 import { SearchTrigger } from "@/components/search/SearchTrigger";
 import { Ornament, SectionTitle } from "@/components/ui/Ornament";
 import { DlcBadge } from "@/components/ui/Badges";
@@ -128,8 +129,8 @@ export default function HomePage() {
           <div className="no-scrollbar -mx-4 flex snap-x gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 lg:grid-cols-6">
             {iconic.map((b) => (
               <Link key={b.slug} href={`/boss/${b.slug}`} className="panel card-link group w-[62vw] shrink-0 snap-start overflow-hidden sm:w-auto">
-                <div className="relative aspect-[3/4] overflow-hidden">
-                  <Engraving spec={b.art} seed={b.slug} variant="sigil" emblem={bossEmblems[b.slug]} className="h-full w-full transition duration-700 group-hover:scale-110" caption={false} title={b.name} />
+                <div className="relative overflow-hidden">
+                  <BossPortrait slug={b.slug} name={b.name} art={b.art} size="thumb" imgClassName="transition duration-700 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-gradient-to-t from-void via-transparent to-transparent" />
                   <div className="absolute bottom-0 p-3">
                     <DlcBadge dlc={b.dlc} hideBase />

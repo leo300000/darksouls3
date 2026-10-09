@@ -10,8 +10,7 @@ import { Rich, plain } from "@/components/rich/Rich";
 import { StepList } from "@/components/guide/StepList";
 import { Difficulty } from "@/components/guide/Difficulty";
 import { CheckItem, ChecklistProgress, CheckToggle, FavoriteButton, VisitRecorder } from "@/components/progress/Check";
-import { Engraving } from "@/components/art/Engraving";
-import { bossEmblems } from "@/data/emblems";
+import { BossPortrait } from "@/components/art/BossPortrait";
 import { zones, stepsForZone, entity, catalog, loreArticles } from "@/lib/data";
 import { zoneBySlug } from "@/data/zones";
 import { bossBySlug } from "@/data/bosses";
@@ -213,7 +212,7 @@ export default async function ZonePage({ params }: { params: Promise<{ zone: str
               <div className="mt-5 grid gap-4 sm:grid-cols-2">
                 {zoneBosses.map((b) => (
                   <article key={b.slug} className="panel grid grid-cols-[110px_1fr] overflow-hidden">
-                    <Engraving spec={b.art} seed={b.slug} variant="sigil" emblem={bossEmblems[b.slug]} className="h-full w-full" caption={false} title={b.name} />
+                    <BossPortrait slug={b.slug} name={b.name} art={b.art} size="thumb" className="h-full" />
                     <div className="p-4">
                       <div className="flex flex-wrap gap-2">
                         <Tag tone={b.required ? "gold" : "default"}>{b.required ? "Obligatoire" : "Facultatif"}</Tag>

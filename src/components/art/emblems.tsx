@@ -8,7 +8,7 @@ export type EmblemKey =
   | "halberd" | "mace" | "tree" | "crystal" | "candles" | "crossedSwords" | "skullCrown"
   | "flame" | "twinBlades" | "cleaver" | "eye" | "crescent" | "axeShield" | "wing"
   | "crownBolt" | "twinCrowns" | "coiledSword" | "claws" | "scythe" | "twinFlames"
-  | "spear" | "brokenSword" | "eclipse" | "eyes" | "darksign" | "crownedWing" | "darkWing";
+  | "spear" | "brokenSword" | "eclipse" | "eyes" | "darksign" | "crownedWing" | "darkWing" | "chainedHalberd";
 
 type Ink = { line: string; glow: string };
 
@@ -59,6 +59,15 @@ export function Emblem({ kind, ink }: { kind: EmblemKey; ink: Ink }) {
           <path d="M-3 -54 L-26 -46 L-3 -36" stroke={line} strokeWidth="2.4" {...S} />
           <path d="M-5 -82 L0 -98 L5 -82" fill={glow} stroke={glow} strokeWidth="1.5" />
           <circle cx="0" cy="82" r="5" fill={line} />
+        </g>
+      );
+    case "chainedHalberd":
+      return (
+        <g>
+          <g transform="rotate(-14)"><Emblem kind="halberd" ink={ink} /></g>
+          {Array.from({ length: 6 }, (_, i) => (
+            <ellipse key={i} cx={-50 + i * 20} cy={30 - i * 9} rx="9" ry="5.5" transform={`rotate(${-24} ${-50 + i * 20} ${30 - i * 9})`} fill="none" stroke={glow} strokeWidth="2.2" />
+          ))}
         </g>
       );
     case "mace":

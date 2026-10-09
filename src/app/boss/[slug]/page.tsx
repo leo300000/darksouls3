@@ -7,8 +7,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { ConfidenceBadge, DlcBadge, Missing, Tag } from "@/components/ui/Badges";
 import { Spoiler } from "@/components/ui/Spoiler";
 import { Toc } from "@/components/ui/Toc";
-import { Illustration, hasIllustration } from "@/components/art/Illustration";
-import { bossEmblems } from "@/data/emblems";
+import { BossPortrait, bossPortraitCaption } from "@/components/art/BossPortrait";
 import { Rich } from "@/components/rich/Rich";
 import { LoreBacklinks, hasLoreBacklinks } from "@/components/lore/LoreBacklinks";
 import { ItemLink } from "@/components/rich/ItemLink";
@@ -93,10 +92,8 @@ export default async function BossDetail({ params }: { params: Promise<{ slug: s
               </Spoiler>
             </div>
             <figure className="panel overflow-hidden">
-              <Illustration imageKey={`boss:${b.slug}`} spec={b.art} seed={b.slug} variant="sigil" emblem={bossEmblems[b.slug]} className="aspect-[3/4] w-full" title={b.name} />
-              <figcaption className="p-3 text-[0.7rem] text-ash">
-                {hasIllustration(`boss:${b.slug}`) ? "Illustration originale." : "Emblème généré pour l'archive (illustration provisoire). Aucune image officielle n'est intégrée."}
-              </figcaption>
+              <BossPortrait slug={b.slug} name={b.name} art={b.art} size="full" eager />
+              <figcaption className="p-3 text-[0.7rem] text-ash">{bossPortraitCaption(b.slug)}</figcaption>
             </figure>
           </section>
 
