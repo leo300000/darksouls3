@@ -51,7 +51,8 @@ for (const b of bosses) {
   if (!Z.has(b.zone)) errors.push(`Boss ${b.slug} : zone inconnue ${b.zone}`);
   for (const r of b.lore.relations) if (!anyRef(r.target)) errors.push(`Boss ${b.slug} : relation inconnue ${r.target}`);
   for (const t of b.transpositions) if (!itemExists(t)) errors.push(`Boss ${b.slug} : transposition introuvable ${t}`);
-  for (const d of b.drops) if (!itemExists(d)) warn.push(`Boss ${b.slug} : objet sans fiche ${d}`);
+  const covenantNames = new Set(covenants.flatMap((c) => [c.nameEn, ...c.aliases].map(slugify)));
+  for (const d of b.drops) if (!itemExists(d) && !covenantNames.has(slugify(d))) warn.push(`Boss ${b.slug} : objet sans fiche ${d}`);
   if (b.souls && b.souls.confidence !== "game" && !b.souls.note) errors.push(`Boss ${b.slug} : âmes sans note de fiabilité`);
 }
 for (const n of npcs) {

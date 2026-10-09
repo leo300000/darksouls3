@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Minus, Plus, RotateCcw, X } from "lucide-react";
+import { setPrefs, useStore } from "@/lib/store";
 
 export type MarkerKind = "feu" | "boss" | "pnj" | "secret" | "raccourci" | "sortie" | "objet" | "consommable";
 
@@ -38,8 +39,13 @@ function Shape({ kind, r, active }: { kind: MarkerKind; r: number; active: boole
   return <circle r={r} {...common} />;
 }
 
+const DEFAULT_FILTERS: Record<MarkerKind, boolean> = { feu: true, boss: true, pnj: true, secret: true, raccourci: true, sortie: true, objet: true, consommable: false };
+
 export function SchematicMap({ markers, path, zoneSlug }: { markers: MapMarkerData[]; path: string; zoneSlug: string }) {
-  const [enabled, setEnabled] = useState<Record<MarkerKind, boolean>>({ feu: true, boss: true, pnj: true, secret: true, raccourci: true, sortie: true, objet: true, consommable: false });
+  // Filtres mémorisés dans les préférences (communs à toutes les cartes).
+  const savedFilters = useStore().prefs.mapFilters;
+  const enabled = { ...DEFAULT_FILTERS, ...(savedFilters ?? {}) } as Record<MarkerKind, boolean>;
+  const setEnabled = (next: Record<MarkerKind, boolean>) => setPrefs({ mapFilters: next });
   const [view, setView] = useState({ x: 0, y: 0, w: 100, h: 70 });
   const [sel, setSel] = useState<string | null>(null);
   const drag = useRef<{ px: number; py: number; vx: number; vy: number } | null>(null);
@@ -63,7 +69,7 @@ export function SchematicMap({ markers, path, zoneSlug }: { markers: MapMarkerDa
       const y = Math.min(70 - h, Math.max(0, oy - ((oy - v.y) * h) / v.h));
       return { x, y, w, h };
     });
-  }, []);
+  }, [setView]);
 
   const viewRef = useRef(view);
   useEffect(() => {
@@ -81,6 +87,18 @@ export function SchematicMap({ markers, path, zoneSlug }: { markers: MapMarkerDa
     el.addEventListener("wheel", onWheel, { passive: false });
     return () => el.removeEventListener("wheel", onWheel);
   }, [zoom]);
+
+  const pan = useCallback((dx: number, dy: number) => {
+    setView((v) => ({ ...v, x: Math.min(100 - v.w, Math.max(0, v.x + dx * v.w)), y: Math.min(70 - v.h, Math.max(0, v.y + dy * v.h)) }));
+  }, [setView]);
+  const onKey = (e: React.KeyboardEvent) => {
+    if (e.target !== svgRef.current) return;
+    const moves: Record<string, [number, number]> = { ArrowLeft: [-0.15, 0], ArrowRight: [0.15, 0], ArrowUp: [0, -0.15], ArrowDown: [0, 0.15] };
+    if (moves[e.key]) { e.preventDefault(); pan(...moves[e.key]); }
+    else if (e.key === "+" || e.key === "=") { e.preventDefault(); zoom(0.75); }
+    else if (e.key === "-") { e.preventDefault(); zoom(1.33); }
+    else if (e.key === "0") { e.preventDefault(); setView({ x: 0, y: 0, w: 100, h: 70 }); }
+  };
 
   const r = Math.max(0.55, view.w / 70);
 
@@ -101,7 +119,9 @@ export function SchematicMap({ markers, path, zoneSlug }: { markers: MapMarkerDa
             viewBox={`${view.x} ${view.y} ${view.w} ${view.h}`}
             className="block aspect-[10/7] w-full touch-none select-none"
             role="application"
-            aria-label="Carte schématique interactive. Utilisez les boutons de zoom ; cliquez sur un marqueur pour l'ouvrir."
+            tabIndex={0}
+            onKeyDown={onKey}
+            aria-label="Carte schématique interactive. Flèches : déplacer ; + et − : zoomer ; 0 : réinitialiser. Tabulation pour parcourir les marqueurs, Entrée pour ouvrir."
             onPointerDown={(e) => {
               (e.target as Element).setPointerCapture?.(e.pointerId);
               drag.current = { px: e.clientX, py: e.clientY, vx: view.x, vy: view.y };

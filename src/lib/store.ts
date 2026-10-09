@@ -36,6 +36,8 @@ export interface Prefs {
   spoilers: "hide" | "show";
   motion: "auto" | "reduced";
   embers: boolean;
+  /** Filtres de marqueurs des cartes schématiques (facultatif, absent des anciennes sauvegardes). */
+  mapFilters?: Record<string, boolean>;
 }
 
 export interface StoreData {
@@ -108,8 +110,22 @@ export function sanitize(input: unknown): StoreData | null {
     favorites: Array.isArray(d.favorites) ? d.favorites.filter((f) => f && typeof f.href === "string" && f.href.startsWith("/")).slice(0, 300) : [],
     history: Array.isArray(d.history) ? d.history.filter((h) => h && typeof h.href === "string" && h.href.startsWith("/")).slice(0, 60) : [],
     recentSearches: Array.isArray(d.recentSearches) ? d.recentSearches.filter((s) => typeof s === "string").slice(0, 8) : [],
-    prefs: { ...base.prefs, ...(d.prefs ?? {}) },
+    prefs: sanitizePrefs(base.prefs, d.prefs),
   };
+}
+
+function sanitizePrefs(base: Prefs, input: unknown): Prefs {
+  const p = input && typeof input === "object" ? (input as Partial<Prefs>) : {};
+  const prefs: Prefs = {
+    theme: p.theme === "light" ? "light" : base.theme,
+    spoilers: p.spoilers === "show" ? "show" : base.spoilers,
+    motion: p.motion === "reduced" ? "reduced" : base.motion,
+    embers: typeof p.embers === "boolean" ? p.embers : base.embers,
+  };
+  if (p.mapFilters && typeof p.mapFilters === "object") {
+    prefs.mapFilters = Object.fromEntries(Object.entries(p.mapFilters).filter(([k, v]) => k.length < 40 && typeof v === "boolean").slice(0, 20));
+  }
+  return prefs;
 }
 
 function readStore(): StoreData {

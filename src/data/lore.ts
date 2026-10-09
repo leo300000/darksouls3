@@ -613,19 +613,50 @@ export const loreArticles: LoreArticle[] = [
         ],
       },
       {
+        heading: "Lieux du premier Dark Souls",
+        confidence: "game",
+        paragraphs: [
+          "Anor Londo, la cité des dieux du premier jeu, est de nouveau traversée : plongée dans la pénombre, elle sert désormais de siège à Aldrich. La dernière zone porte le nom de la Fournaise de la Première Flamme, là où Gwyn s'était consumé.",
+          "Sous le Lac ardent, les Ruines démoniaques prolongent la chute d'Izalith racontée dans Dark Souls : on y affronte le Vieux Roi démon, l'un des derniers de sa race.",
+        ],
+      },
+      {
+        heading: "Héritages et équipements",
+        confidence: "game",
+        paragraphs: [
+          "Plusieurs équipements reprennent des noms du premier jeu : Smough's Great Hammer, Black Iron Set (porté jadis par Tarkus), Havel's Set, Black Bow of Pharis, Sun Princess Ring (Gwynevere). Leurs descriptions rattachent explicitement ces objets à leurs anciens propriétaires.",
+          "Dark Souls II est évoqué par des ensembles et des armes : Drang Armor Set, Drang Hammers, Alva Set, Faraam Helm, Lucatiel's Mask. Le Monceau des résidus compte un feu nommé « Earthen Peak Ruins », du nom d'une zone de Dark Souls II.",
+        ],
+      },
+      {
         heading: "Une convergence",
         confidence: "deduction",
         paragraphs: [
           "La géographie de Dark Souls III semble s'effondrer sur elle-même : royaumes accumulés, Fournaise remplie de structures d'autres époques, Monceau où se superposent les terres. Le DLC final montre le bout du monde.",
+          "Le Monceau des résidus réunit des fragments de Lothric, de terres plus anciennes et de lieux évoquant Drangleic : tout se passe comme si les royaumes successifs de la trilogie s'empilaient au même endroit à mesure que le Feu s'épuise.",
+        ],
+      },
+      {
+        heading: "Pistes discutées",
+        confidence: "theory",
+        paragraphs: [
+          "L'identité exacte des personnages qui semblent revenir (Patches, Andre, Siegward de Catarina face au Siegmeyer du premier jeu) relève de l'interprétation : le jeu ne précise pas s'il s'agit des mêmes individus, de descendants ou de simples échos.",
         ],
       },
     ],
     related: [
       { kind: "zone", slug: "anor-londo" },
       { kind: "zone", slug: "monceau-des-residus" },
+      { kind: "zone", slug: "fournaise-de-la-premiere-flamme" },
+      { kind: "zone", slug: "lac-ardent" },
       { kind: "lore", slug: "izalith" },
+      { kind: "lore", slug: "gwyn" },
+      { kind: "lore", slug: "cycles-du-feu" },
+      { kind: "pnj", slug: "andre" },
+      { kind: "pnj", slug: "patches" },
+      { kind: "pnj", slug: "siegward" },
     ],
-    items: ["Smough's Great Hammer", "Havel's Ring", "Drang Hammers"],
+    items: ["Smough's Great Hammer", "Havel's Ring", "Drang Hammers", "Black Bow of Pharis", "Sun Princess Ring", "Lucatiel's Mask"],
     art: { palette: "ash", motif: "dreg" },
   },
   {

@@ -161,4 +161,11 @@ function findItemKeyBySlug(slug: string): string | null {
   return null;
 }
 
+/** Articles de lore qui citent une entité (liens retour depuis les fiches). */
+export function loreMentioning(kind: "boss" | "pnj" | "zone" | "lore", slug: string): { slug: string; title: string; summary: string }[] {
+  return loreArticles
+    .filter((a) => a.slug !== slug && a.related.some((r) => r.kind === kind && r.slug === slug))
+    .map((a) => ({ slug: a.slug, title: a.title, summary: a.summary }));
+}
+
 export { zones, bosses, npcs, endings, loreArticles, covenants };

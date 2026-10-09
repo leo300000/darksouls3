@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { ConfidenceBadge } from "@/components/ui/Badges";
 import { Toc } from "@/components/ui/Toc";
 import { ItemLink } from "@/components/rich/ItemLink";
+import { LoreBacklinks } from "@/components/lore/LoreBacklinks";
 import { FavoriteButton, VisitRecorder } from "@/components/progress/Check";
 import { loreArticles, refFor } from "@/lib/data";
 import { loreBySlug, loreCategories } from "@/data/lore";
@@ -77,6 +78,9 @@ export default async function LoreArticlePage({ params }: { params: Promise<{ sl
               <p className="mt-3 text-xs text-ash">Les descriptions d&apos;objets ne sont pas reproduites : consultez-les en jeu.</p>
             </section>
           )}
+          <div className="mt-12">
+            <LoreBacklinks kind="lore" slug={a.slug} title="Cité dans d'autres articles" />
+          </div>
         </article>
         <aside className="space-y-6 lg:sticky lg:top-6 lg:self-start">
           <div className="hidden lg:block"><Toc items={toc} /></div>

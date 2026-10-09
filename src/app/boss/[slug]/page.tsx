@@ -10,6 +10,7 @@ import { Toc } from "@/components/ui/Toc";
 import { Illustration, hasIllustration } from "@/components/art/Illustration";
 import { bossEmblems } from "@/data/emblems";
 import { Rich } from "@/components/rich/Rich";
+import { LoreBacklinks, hasLoreBacklinks } from "@/components/lore/LoreBacklinks";
 import { ItemLink } from "@/components/rich/ItemLink";
 import { CheckToggle, FavoriteButton, VisitRecorder } from "@/components/progress/Check";
 import { bosses, mentionsOf, resolveRef, zones } from "@/lib/data";
@@ -50,6 +51,7 @@ export default async function BossDetail({ params }: { params: Promise<{ slug: s
     { id: "strategie", label: "Stratégie" },
     { id: "recompenses", label: "Récompenses" },
     { id: "lore", label: "Lore" },
+    ...(hasLoreBacklinks("boss", b.slug) ? [{ id: "lore-lie", label: "Articles de lore" }] : []),
     ...(steps.length ? [{ id: "parcours", label: "Dans le parcours" }] : []),
   ];
 
@@ -309,6 +311,8 @@ export default async function BossDetail({ params }: { params: Promise<{ slug: s
               </div>
             </Spoiler>
           </section>
+
+          <LoreBacklinks kind="boss" slug={b.slug} />
 
           {steps.length > 0 && (
             <section id="parcours" className="scroll-mt-24">

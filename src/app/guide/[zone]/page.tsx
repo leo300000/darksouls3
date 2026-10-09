@@ -83,6 +83,7 @@ export default async function ZonePage({ params }: { params: Promise<{ zone: str
     { id: "conseils", label: "Conseils de combat" },
   ];
 
+  const missableCount = steps.filter((s) => s.tags.includes("miss")).length;
   const stepRows = steps.map((s) => ({ id: s.id, tags: s.tags, ng: s.ng, content: <Rich segs={s.fr} /> }));
   const zoneChecklistIds = [`zone:${z.slug}`, ...z.bonfires.map((b) => `feu:${z.slug}:${b}`), ...z.bosses.map((b) => `boss:${b}`), ...steps.map((s) => `step:${s.id}`)];
 
@@ -154,6 +155,16 @@ export default async function ZonePage({ params }: { params: Promise<{ zone: str
             <p className="mt-3 max-w-2xl text-sm text-dim">
               {steps.length} étapes, dans l&apos;ordre d&apos;un parcours type. Cochez-les au fur et à mesure : la progression est enregistrée dans ce navigateur. Les noms d&apos;objets sont donnés dans leur version anglaise officielle.
             </p>
+            {(missableCount > 0 || z.questsAffected.length > 0) && (
+              <div className="mt-5 flex gap-3 border-l-2 border-ember-hi/70 bg-ember/5 px-4 py-3 text-sm" role="note">
+                <AlertTriangle size={16} className="mt-0.5 shrink-0 text-ember-hi" aria-hidden />
+                <p>
+                  {missableCount > 0 && <><strong className="text-parch">{missableCount} étape{missableCount > 1 ? "s" : ""}</strong> manquable{missableCount > 1 ? "s" : ""} ou liée{missableCount > 1 ? "s" : ""} à une quête, signalée{missableCount > 1 ? "s" : ""} en rouge (filtre « Manquables »). </>}
+                  {z.questsAffected.length > 0 && <>Quêtes concernées dans cette zone : <a href="#quetes" className="link-archive">{z.questsAffected.length}</a>. </>}
+                  <a href="#manquables" className="link-archive">Lire les avertissements</a> avant d&apos;avancer.
+                </p>
+              </div>
+            )}
             <div className="mt-6">
               <StepList steps={stepRows} />
             </div>

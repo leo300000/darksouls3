@@ -7,6 +7,7 @@ import { DlcBadge, Tag } from "@/components/ui/Badges";
 import { Spoiler } from "@/components/ui/Spoiler";
 import { Engraving } from "@/components/art/Engraving";
 import { Rich } from "@/components/rich/Rich";
+import { LoreBacklinks } from "@/components/lore/LoreBacklinks";
 import { ItemLink } from "@/components/rich/ItemLink";
 import { CheckItem, ChecklistProgress, FavoriteButton, VisitRecorder } from "@/components/progress/Check";
 import { QuestStatusSelect } from "@/components/quest/QuestStatusSelect";
@@ -177,6 +178,8 @@ export default async function NpcPage({ params }: { params: Promise<{ slug: stri
               <ul className="prose-archive mt-5">{n.dialogues.map((d) => <li key={d}>{d}</li>)}</ul>
             </section>
           )}
+
+          <LoreBacklinks kind="pnj" slug={n.slug} />
 
           {steps.length > 0 && (
             <section>
