@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Engraving } from "@/components/art/Engraving";
+import { bossEmblems } from "@/data/emblems";
 import type { ArtSpec, Dlc } from "@/data/types";
 import { activeProfile, setChecked, useHydrated, useStore } from "@/lib/store";
 import { fold } from "@/lib/text";
@@ -71,7 +72,7 @@ export function BossBrowser({ bosses }: { bosses: BossCard[] }) {
       <div className="mb-6 grid gap-3 md:grid-cols-[1.4fr_repeat(4,1fr)]">
         <input className="input-archive" placeholder="Rechercher un boss…" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Rechercher un boss" />
         <select className="input-archive" value={req} onChange={(e) => setReq(e.target.value as typeof req)} aria-label="Caractère obligatoire">
-          <option value="tous">Obligatoires et facultatifs</option>
+          <option value="tous">Tous les statuts</option>
           <option value="obligatoires">Obligatoires</option>
           <option value="facultatifs">Facultatifs</option>
         </select>
@@ -110,7 +111,7 @@ export function BossBrowser({ bosses }: { bosses: BossCard[] }) {
             <li key={b.slug} className="panel card-link group relative overflow-hidden">
               <Link href={`/boss/${b.slug}`} className="block">
                 <div className="relative aspect-[16/10] overflow-hidden">
-                  <Engraving spec={b.art} seed={b.slug} variant="sigil" className={`h-full w-full transition duration-700 group-hover:scale-105 ${beaten ? "opacity-40 grayscale" : ""}`} caption={false} title={b.name} />
+                  <Engraving spec={b.art} seed={b.slug} variant="sigil" emblem={bossEmblems[b.slug]} className={`h-full w-full transition duration-700 group-hover:scale-105 ${beaten ? "opacity-40 grayscale" : ""}`} caption={false} title={b.name} />
                   <div className="absolute inset-0 bg-gradient-to-t from-night via-transparent to-transparent" />
                   <span className="absolute left-3 top-3 font-mono text-xs text-gold">#{String(b.order).padStart(2, "0")}</span>
                   {beaten && <span className="absolute right-3 top-3 border border-ember-hi px-2 py-0.5 font-engrave text-[0.6rem] text-ember-hi">Vaincu</span>}
@@ -118,7 +119,7 @@ export function BossBrowser({ bosses }: { bosses: BossCard[] }) {
                 <div className="p-4 pb-14">
                   <p className="text-[0.7rem] text-gold">{b.zoneName}</p>
                   <h3 className="font-display text-2xl leading-tight text-parch group-hover:text-gold-hi">{b.name}</h3>
-                  <p className="text-xs text-ash">{b.nameEn}</p>
+                  {fold(b.nameEn) !== fold(b.name) && <p className="text-xs text-ash">{b.nameEn}</p>}
                   <div className="mt-3 flex flex-wrap gap-1.5 text-[0.68rem]">
                     <span className={`border px-1.5 py-0.5 ${b.required ? "border-gold/50 text-gold-hi" : "border-line/30 text-dim"}`}>{b.required ? "Obligatoire" : "Facultatif"}</span>
                     {b.lord && <span className="border border-ember-hi/50 px-1.5 py-0.5 text-ember-hi">Seigneur des cendres</span>}

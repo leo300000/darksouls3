@@ -1,11 +1,13 @@
 import type { ArtSpec } from "@/data/types";
 import { seeded, type Rng } from "@/lib/random";
+import { Emblem, type EmblemKey } from "./emblems";
 
 /**
  * Gravure procédurale : illustration originale générée à partir d'un motif et d'une palette.
  * Elle remplace les visuels officiels (non intégrés faute de droits vérifiés) et reste
  * explicitement identifiée comme illustration générée. Une vraie image peut être fournie
- * via le champ `image` des données : le composant <ArtImage> la privilégie alors.
+ * via le registre `src/data/illustrations.ts` : le composant <Illustration> la privilégie alors.
+ * La variante « sigil » peut porter un emblème héraldique propre à l'entité (`emblem`).
  */
 
 const PALETTES: Record<ArtSpec["palette"], { sky: [string, string]; far: string; mid: string; near: string; glow: string; line: string }> = {
@@ -195,6 +197,7 @@ export function Engraving({
   title,
   caption = true,
   variant = "landscape",
+  emblem,
 }: {
   spec: ArtSpec;
   seed: string;
@@ -202,6 +205,7 @@ export function Engraving({
   title?: string;
   caption?: boolean;
   variant?: "landscape" | "sigil";
+  emblem?: EmblemKey;
 }) {
   const p = PALETTES[spec.palette];
   const r = seeded(seed);
@@ -243,7 +247,7 @@ export function Engraving({
       </defs>
       <rect width={W} height={H} fill={`url(#${id}-sky)`} />
       {variant === "sigil" ? (
-        <Sigil id={id} r={r} color={p.line} glow={p.glow} />
+        <Sigil id={id} r={r} color={p.line} glow={p.glow} emblem={emblem} />
       ) : (
         <>
           <circle cx={sunX} cy={sunY} r={m.moon ? 46 : 120} fill={`url(#${id}-glow)`} />
@@ -272,7 +276,7 @@ export function Engraving({
   );
 }
 
-function Sigil({ id, r, color, glow }: { id: string; r: Rng; color: string; glow: string }) {
+function Sigil({ id, r, color, glow, emblem }: { id: string; r: Rng; color: string; glow: string; emblem?: EmblemKey }) {
   const cx = W / 2;
   const cy = H / 2;
   const rays = r.int(8, 16);
@@ -293,9 +297,17 @@ function Sigil({ id, r, color, glow }: { id: string; r: Rng; color: string; glow
       <circle cx={cx} cy={cy} r={140} fill="none" stroke={color} strokeOpacity="0.5" strokeWidth="1.2" />
       <circle cx={cx} cy={cy} r={124} fill="none" stroke={color} strokeOpacity="0.25" strokeWidth="0.8" strokeDasharray="2 6" />
       <circle cx={cx} cy={cy} r={100} fill="#000" fillOpacity="0.35" stroke={color} strokeOpacity="0.6" />
-      <polygon points={pts} fill="none" stroke={glow} strokeOpacity="0.8" strokeWidth="1.4" />
-      <circle cx={cx} cy={cy} r={18} fill={glow} opacity="0.85" />
-      <circle cx={cx} cy={cy} r={42} fill="none" stroke={glow} strokeOpacity="0.5" />
+      {emblem ? (
+        <g transform={`translate(${cx} ${cy}) scale(0.95)`}>
+          <Emblem kind={emblem} ink={{ line: color, glow }} />
+        </g>
+      ) : (
+        <>
+          <polygon points={pts} fill="none" stroke={glow} strokeOpacity="0.8" strokeWidth="1.4" />
+          <circle cx={cx} cy={cy} r={18} fill={glow} opacity="0.85" />
+          <circle cx={cx} cy={cy} r={42} fill="none" stroke={glow} strokeOpacity="0.5" />
+        </>
+      )}
     </g>
   );
 }

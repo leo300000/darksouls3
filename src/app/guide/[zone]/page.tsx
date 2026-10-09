@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "@/lib/nav";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Map as MapIcon, AlertTriangle, KeyRound, EyeOff, Bomb, Lightbulb, Flame } from "lucide-react";
@@ -10,6 +11,7 @@ import { StepList } from "@/components/guide/StepList";
 import { Difficulty } from "@/components/guide/Difficulty";
 import { CheckItem, ChecklistProgress, CheckToggle, FavoriteButton, VisitRecorder } from "@/components/progress/Check";
 import { Engraving } from "@/components/art/Engraving";
+import { bossEmblems } from "@/data/emblems";
 import { zones, stepsForZone, entity, catalog, loreArticles } from "@/lib/data";
 import { zoneBySlug } from "@/data/zones";
 import { bossBySlug } from "@/data/bosses";
@@ -27,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ zone: str
   return {
     title: `${z.name} (${z.nameEn}) — guide de zone`,
     description: `${z.tagline} Cheminement étape par étape, feux, boss, objets, secrets et éléments manquables.`,
-    openGraph: { title: `${z.name} — The Ashen Archive`, description: z.tagline },
+    openGraph: { title: `${z.name} — The Ashen Archive`, description: z.tagline, images: [OG_IMAGE] },
   };
 }
 
@@ -93,6 +95,7 @@ export default async function ZonePage({ params }: { params: Promise<{ zone: str
         title={z.name}
         subtitle={z.tagline}
         art={z.art}
+        imageKey={`zone:${z.slug}`}
         seed={z.slug}
         meta={
           <>
@@ -199,7 +202,7 @@ export default async function ZonePage({ params }: { params: Promise<{ zone: str
               <div className="mt-5 grid gap-4 sm:grid-cols-2">
                 {zoneBosses.map((b) => (
                   <article key={b.slug} className="panel grid grid-cols-[110px_1fr] overflow-hidden">
-                    <Engraving spec={b.art} seed={b.slug} variant="sigil" className="h-full w-full" caption={false} title={b.name} />
+                    <Engraving spec={b.art} seed={b.slug} variant="sigil" emblem={bossEmblems[b.slug]} className="h-full w-full" caption={false} title={b.name} />
                     <div className="p-4">
                       <div className="flex flex-wrap gap-2">
                         <Tag tone={b.required ? "gold" : "default"}>{b.required ? "Obligatoire" : "Facultatif"}</Tag>

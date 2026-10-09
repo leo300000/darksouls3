@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { SectionTitle } from "@/components/ui/Ornament";
 import { Tag } from "@/components/ui/Badges";
 import { Engraving } from "@/components/art/Engraving";
+import { endingEmblems } from "@/data/emblems";
 import { EndingPlanner } from "@/components/endings/EndingPlanner";
 import { endings } from "@/lib/data";
 
@@ -33,7 +34,7 @@ export default function EndingsPage() {
           <div className="grid gap-5 md:grid-cols-2">
             {endings.map((e) => (
               <Link key={e.slug} href={`/fins/${e.slug}`} className={`panel card-link group grid grid-cols-[120px_1fr] overflow-hidden ${e.isVariant ? "opacity-90" : ""}`}>
-                <Engraving spec={e.art} seed={e.slug} variant="sigil" className="h-full w-full" caption={false} title={e.name} />
+                <Engraving spec={e.art} seed={e.slug} variant="sigil" emblem={endingEmblems[e.slug]} className="h-full w-full" caption={false} title={e.name} />
                 <div className="p-5">
                   <div className="flex flex-wrap gap-2">
                     {e.isVariant ? <Tag tone="frost">Variante de « La Fin du Feu »</Tag> : <Tag tone="gold">Succès : {e.achievement}</Tag>}

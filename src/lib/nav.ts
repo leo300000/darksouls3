@@ -62,3 +62,6 @@ export const SITE = {
   description:
     "Encyclopédie non officielle de Dark Souls III et de ses DLC : guide intégral, boss, quêtes, fins, lore, équipements et suivi de progression.",
 };
+
+/** Image de partage (Open Graph), URL absolue préfixée par le chemin de déploiement. */
+export const OG_IMAGE = { url: `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/og.jpg`, width: 1200, height: 630, alt: `${SITE.name} — ${SITE.tagline}` };

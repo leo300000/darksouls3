@@ -12,6 +12,9 @@ import { loreArticles, loreEdges, loreNodes, timeline } from "../src/data/lore";
 import { covenants } from "../src/data/covenants";
 import type { Catalog } from "../src/data/catalog-types";
 import { slugify } from "../src/lib/text";
+import { existsSync } from "node:fs";
+import { illustrations } from "../src/data/illustrations";
+import { bossEmblems, endingEmblems } from "../src/data/emblems";
 
 const catalog: Catalog = JSON.parse(readFileSync(join(__dirname, "../src/data/generated/catalog.json"), "utf8"));
 const errors: string[] = [];
@@ -72,6 +75,13 @@ for (const t of timeline) for (const r of t.refs) if (!kindSet[r.kind].has(r.slu
 const nodeIds = new Set(loreNodes.map((n) => n.id));
 for (const e of loreEdges) for (const id of [e.from, e.to]) if (!nodeIds.has(id)) errors.push(`Graphe : nœud inconnu ${id}`);
 for (const c of covenants) if (!Z.has(c.zone)) errors.push(`Serment ${c.slug} : zone inconnue ${c.zone}`);
+for (const [key, img] of Object.entries(illustrations)) {
+  if (!existsSync(join(__dirname, "../public", img.src))) errors.push(`Illustration ${key} : fichier introuvable public/${img.src}`);
+  if (!img.alt || !img.credit || !img.license) errors.push(`Illustration ${key} : texte alternatif, crédit ou licence manquant`);
+}
+for (const s of Object.keys(bossEmblems)) if (!B.has(s)) errors.push(`Emblème : boss inconnu ${s}`);
+for (const b of bosses) if (!bossEmblems[b.slug]) warn.push(`Boss ${b.slug} : aucun emblème`);
+for (const s of Object.keys(endingEmblems)) if (!E.has(s)) errors.push(`Emblème : fin inconnue ${s}`);
 if (catalog.unresolved.length) errors.push(`${catalog.unresolved.length} liens non résolus dans le catalogue`);
 
 for (const w of warn) console.warn(`⚠ ${w}`);

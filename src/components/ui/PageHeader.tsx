@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import type { ArtSpec } from "@/data/types";
-import { Engraving } from "@/components/art/Engraving";
+import { Illustration } from "@/components/art/Illustration";
 import { fold } from "@/lib/text";
 import { Embers } from "@/components/art/Embers";
 
@@ -52,6 +52,7 @@ export function PageHeader({
   lede,
   art,
   seed,
+  imageKey,
   actions,
   meta,
   compact = false,
@@ -63,6 +64,8 @@ export function PageHeader({
   lede?: React.ReactNode;
   art?: ArtSpec;
   seed?: string;
+  /** Clé du registre d'illustrations (ex. « zone:anor-londo ») ; gravure générée sinon. */
+  imageKey?: string;
   actions?: React.ReactNode;
   meta?: React.ReactNode;
   compact?: boolean;
@@ -71,7 +74,7 @@ export function PageHeader({
     <header className={`relative overflow-hidden border-b border-line/15 ${compact ? "" : "min-h-[300px]"}`}>
       {art && (
         <div className="absolute inset-0 opacity-70">
-          <Engraving spec={art} seed={seed ?? title} className="h-full w-full" title={title} caption={false} />
+          <Illustration imageKey={imageKey ?? ""} spec={art} seed={seed ?? title} className="h-full w-full" title={title} caption={false} />
           <div className="absolute inset-0 bg-gradient-to-r from-void via-void/85 to-void/30" />
           <div className="absolute inset-0 bg-gradient-to-t from-void via-transparent to-void/40" />
         </div>

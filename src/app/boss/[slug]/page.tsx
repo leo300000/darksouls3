@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "@/lib/nav";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Swords, Crosshair, Wand2, Shield } from "lucide-react";
@@ -6,11 +7,12 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { ConfidenceBadge, DlcBadge, Missing, Tag } from "@/components/ui/Badges";
 import { Spoiler } from "@/components/ui/Spoiler";
 import { Toc } from "@/components/ui/Toc";
-import { Engraving } from "@/components/art/Engraving";
+import { Illustration, hasIllustration } from "@/components/art/Illustration";
+import { bossEmblems } from "@/data/emblems";
 import { Rich } from "@/components/rich/Rich";
 import { ItemLink } from "@/components/rich/ItemLink";
 import { CheckToggle, FavoriteButton, VisitRecorder } from "@/components/progress/Check";
-import { bosses, mentionsOf, resolveRef } from "@/lib/data";
+import { bosses, mentionsOf, resolveRef, zones } from "@/lib/data";
 import { bossBySlug } from "@/data/bosses";
 import { zoneBySlug } from "@/data/zones";
 import { formatNumber } from "@/lib/text";
@@ -23,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const b = bossBySlug.get(slug);
   if (!b) return { title: "Boss introuvable" };
-  return { title: `${b.name} (${b.nameEn}) — stratégie et lore`, description: b.summary, openGraph: { title: b.name, description: b.summary } };
+  return { title: `${b.name} (${b.nameEn}) — stratégie et lore`, description: b.summary, openGraph: { title: b.name, description: b.summary, images: [OG_IMAGE] } };
 }
 
 export default async function BossDetail({ params }: { params: Promise<{ slug: string }> }) {
@@ -36,6 +38,10 @@ export default async function BossDetail({ params }: { params: Promise<{ slug: s
   const prev = ordered[i - 1];
   const next = ordered[i + 1];
   const steps = mentionsOf(`boss:${b.slug}`);
+  // Passages menant à la zone du boss (données des zones) : conditions d'accès sans les dupliquer.
+  const access = zones
+    .flatMap((from) => from.connections.filter((c) => c.zone === b.zone && c.kind !== "raccourci").map((c) => ({ from, via: c.via, condition: c.condition })))
+    .slice(0, 3);
 
   const toc = [
     { id: "presentation", label: "Présentation" },
@@ -85,8 +91,10 @@ export default async function BossDetail({ params }: { params: Promise<{ slug: s
               </Spoiler>
             </div>
             <figure className="panel overflow-hidden">
-              <Engraving spec={b.art} seed={b.slug} variant="sigil" className="aspect-[3/4] w-full" title={b.name} />
-              <figcaption className="p-3 text-[0.7rem] text-ash">Illustration générée (temporaire). Aucune image officielle n&apos;est intégrée.</figcaption>
+              <Illustration imageKey={`boss:${b.slug}`} spec={b.art} seed={b.slug} variant="sigil" emblem={bossEmblems[b.slug]} className="aspect-[3/4] w-full" title={b.name} />
+              <figcaption className="p-3 text-[0.7rem] text-ash">
+                {hasIllustration(`boss:${b.slug}`) ? "Illustration originale." : "Emblème généré pour l'archive (illustration provisoire). Aucune image officielle n'est intégrée."}
+              </figcaption>
             </figure>
           </section>
 
@@ -333,8 +341,33 @@ export default async function BossDetail({ params }: { params: Promise<{ slug: s
               <div className="flex justify-between gap-3"><dt className="text-dim">Contenu</dt><dd>{b.dlc === "base" ? "Jeu de base" : b.dlc === "ashes-of-ariandel" ? "Ashes of Ariandel" : "The Ringed City"}</dd></div>
               <div className="flex justify-between gap-3"><dt className="text-dim">Statut</dt><dd>{b.required ? "Obligatoire" : "Facultatif"}</dd></div>
               <div className="flex justify-between gap-3"><dt className="text-dim">Âme</dt><dd className="text-right">{b.soulItem ? <ItemLink name={b.soulItem} /> : "—"}</dd></div>
-              <div className="flex justify-between gap-3"><dt className="text-dim">Âmes NG</dt><dd className="font-mono">{b.souls ? formatNumber(b.souls.value) : "—"}</dd></div>
+              <div className="flex justify-between gap-3">
+                <dt className="text-dim">Âmes NG</dt>
+                <dd className="text-right font-mono">
+                  {b.souls ? formatNumber(b.souls.value) : "—"}
+                  {b.souls && b.souls.confidence !== "game" && <span className="block font-sans text-[0.68rem] text-ash">à vérifier</span>}
+                </dd>
+              </div>
+              <div className="flex justify-between gap-3">
+                <dt className="text-dim">Faiblesses</dt>
+                <dd className="text-right">{b.weaknesses?.value.length ? b.weaknesses.value.join(", ") : "—"}{b.weaknesses && b.weaknesses.confidence !== "game" && <span className="block text-[0.68rem] text-ash">à vérifier</span>}</dd>
+              </div>
             </dl>
+            {access.length > 0 && (
+              <div className="mt-4 border-t border-line/15 pt-3">
+                <p className="eyebrow mb-2">Accès à la zone</p>
+                <ul className="space-y-2 text-xs">
+                  {access.map((a) => (
+                    <li key={a.from.slug + a.via}>
+                      <span className="text-dim">Depuis </span>
+                      <Link href={`/guide/${a.from.slug}`} className="link-archive">{a.from.name}</Link>
+                      <span className="text-dim"> — {a.via}</span>
+                      {a.condition && <span className="mt-0.5 block text-gold">Condition : {a.condition}</span>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
           <div className="hidden lg:block"><Toc items={toc} /></div>
         </aside>

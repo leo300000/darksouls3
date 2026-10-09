@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { SectionTitle } from "@/components/ui/Ornament";
 import { DlcBadge } from "@/components/ui/Badges";
-import { Engraving } from "@/components/art/Engraving";
+import { Illustration } from "@/components/art/Illustration";
 import { ZoneGraph, type GraphEdge } from "@/components/guide/ZoneGraph";
 import { ZoneProgressMini } from "@/components/guide/ZoneProgressMini";
 import { zones, bosses, stepsForZone } from "@/lib/data";
@@ -71,7 +71,7 @@ export default function GuidePage() {
                     <li key={z.slug}>
                       <Link href={`/guide/${z.slug}`} className="panel card-link group grid grid-cols-[110px_1fr] overflow-hidden sm:grid-cols-[150px_1fr]">
                         <div className="relative">
-                          <Engraving spec={z.art} seed={z.slug} className="h-full w-full" caption={false} title={z.name} />
+                          <Illustration imageKey={`zone:${z.slug}`} spec={z.art} seed={z.slug} className="h-full w-full" caption={false} title={z.name} />
                           <span className="absolute left-2 top-2 font-display text-3xl text-parch/90 drop-shadow">{String(z.order).padStart(2, "0")}</span>
                         </div>
                         <div className="p-4">

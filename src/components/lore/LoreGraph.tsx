@@ -90,7 +90,7 @@ export function LoreGraph({ nodes, edges }: { nodes: LoreNode[]; edges: LoreEdge
             return (
               <g key={n.id} transform={`translate(${q.x} ${q.y})`} tabIndex={0} role="button" aria-pressed={on} aria-label={n.label} className="cursor-pointer outline-none" onClick={() => setSel(n.id)} onKeyDown={(ev) => ev.key === "Enter" && setSel(n.id)}>
                 <circle r={on ? 15 : 10} fill={GROUP_FILL[n.group]} stroke={on ? "rgb(var(--c-ember-hi))" : near ? "rgb(var(--c-gold-hi))" : "rgb(var(--c-line) / 0.5)"} strokeWidth={on ? 2.5 : 1.2} />
-                <text y={-16} textAnchor="middle" fontSize="12.5" fill={on || near ? "rgb(var(--c-parch))" : "rgb(var(--c-text-dim))"} opacity={sel && !on && !near ? 0.6 : 1}>{n.label}</text>
+                <text y={-16} textAnchor="middle" fontSize="12.5" fill={on || near ? "rgb(var(--c-parch))" : "rgb(var(--c-text-dim))"} opacity={sel && !on && !near ? 0.75 : 1} stroke="rgb(var(--c-void))" strokeWidth={3} strokeOpacity={0.85} paintOrder="stroke">{n.label}</text>
               </g>
             );
           })}

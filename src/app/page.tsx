@@ -3,6 +3,7 @@ import { ArrowRight, BookOpen, Flame } from "lucide-react";
 import { HeroScene } from "@/components/art/HeroScene";
 import { Embers } from "@/components/art/Embers";
 import { Engraving } from "@/components/art/Engraving";
+import { bossEmblems, endingEmblems } from "@/data/emblems";
 import { SearchTrigger } from "@/components/search/SearchTrigger";
 import { Ornament, SectionTitle } from "@/components/ui/Ornament";
 import { DlcBadge } from "@/components/ui/Badges";
@@ -128,7 +129,7 @@ export default function HomePage() {
             {iconic.map((b) => (
               <Link key={b.slug} href={`/boss/${b.slug}`} className="panel card-link group w-[62vw] shrink-0 snap-start overflow-hidden sm:w-auto">
                 <div className="relative aspect-[3/4] overflow-hidden">
-                  <Engraving spec={b.art} seed={b.slug} variant="sigil" className="h-full w-full transition duration-700 group-hover:scale-110" caption={false} title={b.name} />
+                  <Engraving spec={b.art} seed={b.slug} variant="sigil" emblem={bossEmblems[b.slug]} className="h-full w-full transition duration-700 group-hover:scale-110" caption={false} title={b.name} />
                   <div className="absolute inset-0 bg-gradient-to-t from-void via-transparent to-transparent" />
                   <div className="absolute bottom-0 p-3">
                     <DlcBadge dlc={b.dlc} hideBase />
@@ -270,7 +271,7 @@ export default function HomePage() {
                 .filter((e) => !e.isVariant)
                 .map((e) => (
                   <Link key={e.slug} href={`/fins/${e.slug}`} className="panel card-link group relative flex min-h-[260px] flex-col justify-end overflow-hidden">
-                    <Engraving spec={e.art} seed={e.slug} variant="sigil" className="absolute inset-0 h-full w-full opacity-70" caption={false} />
+                    <Engraving spec={e.art} seed={e.slug} variant="sigil" emblem={endingEmblems[e.slug]} className="absolute inset-0 h-full w-full opacity-70" caption={false} />
                     <div className="absolute inset-0 bg-gradient-to-t from-void to-transparent" />
                     <div className="relative p-4">
                       <p className="font-engrave text-[0.58rem] text-gold">{e.nameEn}</p>

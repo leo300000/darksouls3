@@ -12,7 +12,7 @@ import { MobileTopBar } from "@/components/layout/MobileNav";
 import { SearchDialog } from "@/components/search/SearchDialog";
 import { BackToTop, PrefsApplier } from "@/components/layout/Chrome";
 import { Footer } from "@/components/layout/Footer";
-import { SITE } from "@/lib/nav";
+import { OG_IMAGE, SITE } from "@/lib/nav";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
@@ -27,8 +27,9 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     title: `${SITE.name} — ${SITE.tagline}`,
     description: SITE.description,
+    images: [OG_IMAGE],
   },
-  twitter: { card: "summary_large_image" },
+  twitter: { card: "summary_large_image", images: [OG_IMAGE.url] },
 };
 
 export const viewport: Viewport = {
