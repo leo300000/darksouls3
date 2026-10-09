@@ -45,6 +45,12 @@ export default function WeaponsPage() {
               { id: "disponibilite", label: "Disponibilité" },
               { id: "infusion", label: "Infusions" },
               { id: "manquable", label: "Manquable" },
+              ...[
+                { id: "poids", label: "Poids" },
+                { id: "exigences", label: "Exigences" },
+                { id: "scaling", label: "Scaling" },
+                { id: "degats", label: "Type de dégâts" },
+              ].filter((f) => rows.some((r) => r.facets[f.id]?.length)),
             ]}
             columns={[
               { id: "obtention", label: "Obtention" },

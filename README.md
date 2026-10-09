@@ -28,6 +28,7 @@ Autres commandes :
 | `npm run lint` | ESLint (config Next.js) |
 | `npm run data:build` | Régénère `src/data/generated/catalog.json` depuis la source et les traductions |
 | `npm run data:validate` | Vérifie que toutes les références croisées (zones, boss, PNJ, lore, objets) existent |
+| `node tests/e2e.mjs <dossier>` | 19 tests de bout en bout Playwright (recherche, checklists, filtres, import/export, 404, mobile) ; nécessite `PW_PATH` vers le paquet playwright et le serveur lancé |
 
 Variable optionnelle : `NEXT_PUBLIC_SITE_URL` (URL publique, utilisée pour le sitemap et les métadonnées Open Graph).
 
