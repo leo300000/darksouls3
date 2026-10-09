@@ -115,6 +115,8 @@ Aucune ressource officielle n'est intégrée, faute de droits vérifiés. En att
 - Chaque fiche affiche une **gravure générée** : un SVG procédural, unique par entité.
 - Les boss et les fins portent un **emblème héraldique original**, dessiné en SVG pour le site (`src/components/art/emblems.tsx`, correspondance dans `src/data/emblems.ts`).
 
+**Images des boss :** un dossier par boss dans [`assets/boss-src/`](assets/boss-src/). On y dépose une image et on remplit `credits.json` ; le déploiement produit les versions optimisées et l'image s'affiche partout. Mode d'emploi dans `assets/boss-src/README.md`.
+
 Pour intégrer de vraies illustrations, originales ou sous licence compatible :
 
 1. Déposez le fichier dans `public/illustrations/<type>/<slug>.webp`. Les formats conseillés sont dans `public/illustrations/README.md`.

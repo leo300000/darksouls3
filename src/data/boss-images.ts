@@ -5,8 +5,9 @@
  *   - `images/boss/<slug>.webp`        grand visuel de la fiche (3:4, 900 × 1200)
  *   - `images/boss/<slug>-thumb.webp`  miniature portrait (3:4, 450 × 600 : accueil, guide)
  *   - `images/boss/<slug>-card.webp`   vignette des cartes de la liste des boss (16:10, 800 × 500)
- * Les fichiers sont produits par `npm run images:boss` à partir des sources placées dans
- * `assets/boss-src/<slug>.(png|jpg|webp)`.
+ * Les fichiers sont produits par `npm run images:boss` à partir du dossier `assets/boss-src/<slug>/`
+ * (une image + `credits.json`). Le script écrit `src/data/generated/boss-images.json` (statut et crédits),
+ * fusionné ici avec les textes alternatifs par défaut.
  *
  * Statuts :
  *   - "integre"    : fichier présent, provenance et licence vérifiées, affiché sur le site ;
@@ -17,6 +18,8 @@
  * fan sans licence explicite ne doit être ajoutée. `npm run data:validate` vérifie les
  * fichiers, les doublons et la cohérence des statuts.
  */
+
+import generated from "./generated/boss-images.json";
 
 export type BossImageStatus = "integre" | "a-verifier" | "a-produire";
 
@@ -39,7 +42,11 @@ export interface BossImage {
 const W = 900;
 const H = 1200;
 
+type GeneratedEntry = { status: BossImageStatus; source: string | null; author: string | null; license: string | null; alt: string | null };
+const produced = generated as Record<string, GeneratedEntry>;
+
 function entry(slug: string, alt: string, extra: Partial<BossImage> = {}): BossImage {
+  const g = produced[slug];
   return {
     file: `images/boss/${slug}.webp`,
     thumb: `images/boss/${slug}-thumb.webp`,
@@ -51,6 +58,7 @@ function entry(slug: string, alt: string, extra: Partial<BossImage> = {}): BossI
     source: null,
     author: null,
     license: null,
+    ...(g ? { status: g.status, source: g.source, author: g.author, license: g.license, alt: g.alt ?? alt } : {}),
     ...extra,
   };
 }

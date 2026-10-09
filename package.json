@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/boss-images.mjs",
     "build": "next build",
     "data:build": "tsx scripts/build-catalog.ts",
     "data:validate": "tsx scripts/validate-data.ts",

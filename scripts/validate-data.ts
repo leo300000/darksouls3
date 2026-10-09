@@ -99,8 +99,8 @@ for (const s of Object.keys(endingEmblems)) if (!E.has(s)) errors.push(`Emblème
       referenced.add(p);
     }
     const present = paths.filter((p) => existsSync(pub(p)));
-    if (img.status !== "a-produire" && present.length !== paths.length) errors.push(`Image boss ${slug} (${img.status}) : fichier(s) manquant(s) ${paths.filter((p) => !present.includes(p)).join(", ")}`);
-    if (img.status === "a-produire" && present.length) warn.push(`Image boss ${slug} : fichiers présents mais statut « a-produire »`);
+    if (img.status === "integre" && present.length !== paths.length) errors.push(`Image boss ${slug} (${img.status}) : fichier(s) manquant(s) ${paths.filter((p) => !present.includes(p)).join(", ")}`);
+    if (img.status !== "integre" && present.length) warn.push(`Image boss ${slug} : fichiers publiés alors que le statut est « ${img.status} »`);
     if (img.status === "integre" && (!img.source || !img.author || !img.license)) errors.push(`Image boss ${slug} : provenance, auteur ou licence manquant pour une image intégrée`);
     if (!img.alt || img.alt.length < 15) errors.push(`Image boss ${slug} : texte alternatif absent ou trop court`);
     for (const p of present) {

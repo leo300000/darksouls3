@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# images de boss dérivées (produites par npm run images:boss à partir d'assets/boss-src)
+/public/images/boss/*.webp

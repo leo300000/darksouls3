@@ -28,6 +28,8 @@ jobs:
         with:
           enablement: true  # active Pages (source : GitHub Actions) s'il ne l'est pas encore
       - run: npm ci
+      - name: Images de boss (assets/boss-src → public/images/boss)
+        run: npm run images:boss
       - run: npm run data:validate
       - name: Export statique
         run: npm run build
