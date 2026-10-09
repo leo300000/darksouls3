@@ -1,0 +1,36 @@
+/**
+ * Descriptions générales des catégories d'équipement (conseils de style de jeu).
+ * Ce sont des généralités éditoriales, pas des statistiques : elles ne remplacent pas les valeurs chiffrées.
+ */
+export const categoryNotes: Record<string, string> = {
+  Dagues: "Armes très légères et très rapides, à faible allonge. Idéales pour les coups critiques (dos, parade) et les builds axés sur la dextérité.",
+  "Épées droites": "Polyvalentes, rapides et faciles à prendre en main. Un choix sûr pour débuter comme pour les builds de qualité.",
+  "Grandes épées": "Plus lentes que les épées droites mais plus puissantes ; bon compromis entre allonge, dégâts et maniabilité.",
+  "Très grandes épées": "Armes massives à coups larges et lents, capables de briser la posture. Demandent une bonne gestion de l'endurance.",
+  "Épées courbes": "Enchaînements rapides de taille, souvent adaptées aux builds de dextérité et au saignement.",
+  "Grandes épées courbes": "Courbes et lourdes, elles allient amplitude et vitesse correcte.",
+  "Épées d'estoc": "Coups d'estoc précis, efficaces derrière un bouclier ; allonge appréciable.",
+  Katanas: "Rapides, élégantes, souvent associées au saignement. Fragiles face aux armures lourdes.",
+  Haches: "Coups puissants à une main, bonne capacité d'étourdissement.",
+  "Grandes haches": "Coups très lourds à deux mains, recherchés par les builds de force.",
+  Marteaux: "Dégâts de frappe, efficaces contre les ennemis en armure et les squelettes.",
+  "Grands marteaux": "Les armes les plus lourdes : impact maximal, vitesse minimale.",
+  Lances: "Estocs à longue portée, souvent utilisables derrière un bouclier levé.",
+  Piques: "Lances très longues : l'allonge avant tout.",
+  Hallebardes: "Allonge et balayages larges ; excellentes pour tenir les ennemis à distance.",
+  Faux: "Larges balayages et saignement fréquent ; techniques mais redoutables.",
+  Fouets: "Très longue portée mais dégâts modestes ; plus utiles pour leurs effets que pour la puissance brute.",
+  Poings: "Combat à mains nues renforcé ; enchaînements très rapides.",
+  Griffes: "Coups rapides, souvent avec saignement.",
+  Arcs: "Attaques à distance, utiles pour attirer ou abattre des ennemis isolés.",
+  "Grands arcs": "Projectiles lourds à forte puissance d'impact ; tirs lents.",
+  Arbalètes: "Tirs puissants sans dépendre des caractéristiques ; rechargement lent.",
+  Bâtons: "Catalyseurs de sorcellerie. Leur puissance dépend surtout de l'Intelligence.",
+  "Flammes de pyromancie": "Catalyseurs de pyromancie.",
+  Talismans: "Catalyseurs de miracles, liés à la Foi.",
+  "Carillons sacrés": "Catalyseurs de miracles pouvant aussi servir d'arme légère.",
+  Torches: "Éclairent les zones sombres et peuvent repousser certains ennemis (sangsues).",
+  "Petits boucliers": "Légers, ils favorisent la parade plutôt que le blocage.",
+  Boucliers: "Bouclier standard : équilibre entre blocage et poids.",
+  "Grands boucliers": "Blocage maximal au prix d'un poids important.",
+};
