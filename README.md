@@ -30,7 +30,7 @@ Autres commandes :
 | `npm run lint` | ESLint (config Next.js) |
 | `npm run data:build` | Régénère `src/data/generated/catalog.json` depuis la source et les traductions |
 | `npm run data:validate` | Vérifie que toutes les références croisées (zones, boss, PNJ, lore, objets) existent |
-| `node tests/e2e.mjs <dossier>` | 19 tests de bout en bout Playwright (recherche, checklists, filtres, import/export, 404, mobile) ; nécessite `PW_PATH` vers le paquet playwright et le serveur lancé |
+| `node tests/e2e.mjs <dossier>` | 19 tests de bout en bout Playwright (recherche, checklists, filtres, import/export, 404, mobile). Nécessite `PW_PATH` vers le paquet playwright et un serveur lancé ; `E2E_BASE` permet de viser l'export servi sous `/darksouls3` (par défaut `http://localhost:3000`). |
 
 Variable optionnelle : `NEXT_PUBLIC_SITE_URL` (URL publique, utilisée pour le sitemap et les métadonnées Open Graph).
 
@@ -110,8 +110,20 @@ Voir la page **Sources et fiabilité** (`/a-propos`). En résumé :
 
 ### Images
 
-Aucune ressource officielle n'est intégrée (droits non vérifiés). Chaque fiche affiche une **gravure générée** (SVG procédural, unique par entité,
-marquée « Gravure générée »). Le type `ImageRef` (src, alt, crédit, licence) est prévu pour brancher de vraies illustrations dont l'usage est autorisé.
+Aucune ressource officielle n'est intégrée, faute de droits vérifiés. En attendant de vraies illustrations :
+
+- Chaque fiche affiche une **gravure générée** : un SVG procédural, unique par entité.
+- Les boss et les fins portent un **emblème héraldique original**, dessiné en SVG pour le site (`src/components/art/emblems.tsx`, correspondance dans `src/data/emblems.ts`).
+
+Pour intégrer de vraies illustrations, originales ou sous licence compatible :
+
+1. Déposez le fichier dans `public/illustrations/<type>/<slug>.webp`. Les formats conseillés sont dans `public/illustrations/README.md`.
+2. Déclarez-le dans `src/data/illustrations.ts`, avec texte alternatif, crédit et licence.
+3. Lancez `npm run data:validate`, qui vérifie la présence du fichier.
+
+Le composant `<Illustration>` affiche alors l'image à la place de la gravure, avec le préfixe `/darksouls3` géré automatiquement.
+
+L'image de partage `public/og.jpg` est générée à partir de l'illustration d'accueil du site.
 
 ## Licence et mentions
 

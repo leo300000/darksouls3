@@ -47,3 +47,24 @@ Audit réalisé avant toute modification, sur la version déployée (export stat
 
 - Les wikis (Fextralife, Fandom) restent inaccessibles depuis l'environnement de travail. Les statistiques chiffrées (PV, statistiques d'armes) ne peuvent pas être recoupées : elles restent marquées « à compléter », jamais inventées.
 - Les illustrations finales doivent être produites séparément. Un circuit d'intégration est préparé (point 7).
+
+## Suite donnée (état après corrections)
+
+| # | Statut | Correction |
+| --- | --- | --- |
+| 1 | Corrigé | `min-w-0` sur les éléments de grille. Aucun débordement sur les 156 pages contrôlées à 360 px. |
+| 2 | Corrigé | Symbolisme et interprétation sont regroupés sous le badge « Déduction étayée ». |
+| 3 | Corrigé | 13 particularités en double supprimées. Les conditions d'invocation sont précisées d'après la source (Saber, Eygon, Anri, Horace, Sirris, Siegward). |
+| 4 | Corrigé | La note d'Aldrich suit le texte de la source. |
+| 5 | Corrigé | Le sous-titre est masqué quand les noms sont identiques (en-tête et cartes de boss). |
+| 6 | Amélioré | Emblèmes héraldiques originaux pour les 25 boss et les 4 fins. |
+| 7 | Préparé | Registre `src/data/illustrations.ts`, composant `<Illustration>`, dossier `public/illustrations/` et contrôle de présence des fichiers. Aucune image n'est encore déclarée. |
+| 8 | Corrigé | Les fiches de boss et de PNJ listent les articles de lore qui les citent, et les articles indiquent « Cité dans ». |
+| 9 | Corrigé | Les filtres sont mémorisés dans les préférences (champ facultatif, compatible avec les anciennes sauvegardes). La carte se déplace au clavier. |
+| 10 | Corrigé | L'encadré « Fiche » indique les faiblesses, la mention « à vérifier » et l'accès à la zone. |
+| 11–15 | Corrigés | Compteur sur une ligne, libellé de recherche, titre de la page 404, image Open Graph, contraste du graphe. |
+
+Défauts découverts en cours de route :
+
+- La classe `.btn`, définie hors des couches Tailwind, écrasait les utilitaires. Résultat : flèche « retour en haut » et boutons de zoom réduits à quelques pixels, état actif des favoris invisible. Les styles des boutons sont maintenant dans `@layer components`.
+- Les serments cités en récompense (Spears of the Church) apparaissaient comme objets sans fiche. Ils renvoient maintenant vers `/serments`.
