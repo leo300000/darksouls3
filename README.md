@@ -2,6 +2,8 @@
 
 > *Toutes les cendres ont une histoire.*
 
+**🔗 Accéder au site : [leo300000.github.io/darksouls3](https://leo300000.github.io/darksouls3/)**
+
 Encyclopédie interactive **non officielle** de *Dark Souls III* et de ses deux DLC (*Ashes of Ariandel*, *The Ringed City*), en français :
 guide intégral zone par zone, boss, PNJ et quêtes, fins, lore, équipements, cartes schématiques et suivi de progression vers le 100 %.
 
@@ -38,7 +40,7 @@ Le workflow `.github/workflows/pages.yml` construit une version 100 % statique d
 sur `main` (ou sur la branche de travail), ou à la demande depuis l'onglet **Actions** (« Run workflow »).
 
 Activation, une seule fois : dépôt GitHub → **Settings → Pages → Build and deployment → Source : GitHub Actions**.
-Le site est ensuite servi à l'adresse `https://<utilisateur>.github.io/<dépôt>/`.
+Le site est ensuite servi à l'adresse https://leo300000.github.io/darksouls3/.
 
 Pour reproduire l'export en local :
 
